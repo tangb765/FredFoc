@@ -1,3 +1,6 @@
 [submodule "RT-Thread"]
 	path = RT-Thread
 	url = https://github.com/RT-Thread/rt-thread.git
+[submodule "gimbal/mclib"]
+	path = gimbal/mclib
+	url = https://github.com/FredDeng2016/mclib.git
