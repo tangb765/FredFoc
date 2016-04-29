@@ -15,7 +15,6 @@
 #include <rthw.h>
 #include <rtdevice.h>
 #include <board.h>
-#include <gpio.h>
 
 #ifdef RT_USING_PIN
 
@@ -216,7 +215,7 @@ static const struct pin_index pins[] =
     __STM32_PIN(7, APB2, C, 13),
     __STM32_PIN(8, APB2, C, 14),
     __STM32_PIN(9, APB2, C, 15),
-    
+
     __STM32_PIN(10, APB2, F, 0),
     __STM32_PIN(11, APB2, F, 1),
     __STM32_PIN(12, APB2, F, 2),
@@ -472,7 +471,7 @@ const static struct rt_pin_ops _stm32_pin_ops =
 int stm32_hw_pin_init(void)
 {
     int result;
-    
+
     result = rt_device_pin_register("pin", &_stm32_pin_ops, RT_NULL);
     return result;
 }

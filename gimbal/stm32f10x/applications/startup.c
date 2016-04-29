@@ -10,6 +10,7 @@
  * Change Logs:
  * Date           Author       Notes
  * 2006-08-31     Bernard      first implementation
+ * 2011-06-05     Bernard      modify for STM32F107 version
  */
 
 #include <rthw.h>
@@ -24,13 +25,20 @@
 /*@{*/
 
 extern int  rt_application_init(void);
+#ifdef RT_USING_FINSH
+extern void finsh_system_init(void);
+extern void finsh_set_device(const char* device);
+#endif
 
 #ifdef __CC_ARM
 extern int Image$$RW_IRAM1$$ZI$$Limit;
+#define STM32_SRAM_BEGIN    (&Image$$RW_IRAM1$$ZI$$Limit)
 #elif __ICCARM__
 #pragma section="HEAP"
+#define STM32_SRAM_BEGIN    (__segment_end("HEAP"))
 #else
 extern int __bss_end;
+#define STM32_SRAM_BEGIN    (&__bss_end)
 #endif
 
 /*******************************************************************************
@@ -55,39 +63,38 @@ void assert_failed(u8* file, u32 line)
  * This function will startup RT-Thread RTOS.
  */
 void rtthread_startup(void)
-{
+{	
     /* init board */
     rt_hw_board_init();
 
     /* show version */
-    rt_show_version();
+//    rt_show_version();
+	
+    /* init tick */
+    rt_system_tick_init();
 
-#ifdef RT_USING_HEAP
-#if STM32_EXT_SRAM
-    rt_system_heap_init((void*)STM32_EXT_SRAM_BEGIN, (void*)STM32_EXT_SRAM_END);
-#else
-#ifdef __CC_ARM
-    rt_system_heap_init((void*)&Image$$RW_IRAM1$$ZI$$Limit, (void*)STM32_SRAM_END);
-#elif __ICCARM__
-    rt_system_heap_init(__segment_end("HEAP"), (void*)STM32_SRAM_END);
-#else
-    /* init memory system */
-    rt_system_heap_init((void*)&__bss_end, (void*)STM32_SRAM_END);
-#endif
-#endif  /* STM32_EXT_SRAM */
-#endif /* RT_USING_HEAP */
+    /* init kernel object */
+    rt_system_object_init();
+
+    /* init timer system */
+    rt_system_timer_init();
+
+    rt_system_heap_init((void*)STM32_SRAM_BEGIN, (void*)STM32_SRAM_END);
 
     /* init scheduler system */
     rt_system_scheduler_init();
+		
+    /* init application */
+    rt_application_init();
 
-    /* initialize timer */
-    rt_system_timer_init();
+#ifdef RT_USING_FINSH
+    /* init finsh */
+    finsh_system_init();
+    finsh_set_device( FINSH_DEVICE_NAME );
+#endif
 
     /* init timer thread */
     rt_system_timer_thread_init();
-
-    /* init application */
-    rt_application_init();
 
     /* init idle thread */
     rt_thread_idle_init();

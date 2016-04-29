@@ -8,8 +8,9 @@ cwd     = os.path.join(str(Dir('#')), 'drivers')
 src = Split("""
 board.c
 stm32f10x_it.c
-led.c
 usart.c
+hrt.c
+virtual_eeprom.c
 """)
 
 if GetDepend(['RT_USING_PIN']):

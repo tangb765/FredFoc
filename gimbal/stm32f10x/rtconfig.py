@@ -14,7 +14,7 @@ if os.getenv('RTT_CC'):
 # 'STM32F10X_MD','STM32F10X_MD_VL',
 # 'STM32F10X_HD','STM32F10X_HD_VL',
 # 'STM32F10X_XL','STM32F10X_CL'
-STM32_TYPE = 'STM32F10X_HD'
+STM32_TYPE = 'STM32F10X_MD'
 
 # lcd panel options
 # 'FMT0371','ILI932X', 'SSD1289'
@@ -28,7 +28,7 @@ if  CROSS_TOOL == 'gcc':
 	EXEC_PATH 	= 'D:/SourceryGCC/bin'
 elif CROSS_TOOL == 'keil':
 	PLATFORM 	= 'armcc'
-	EXEC_PATH 	= 'C:/Keil'
+	EXEC_PATH 	= 'C:\Keil_v5'
 elif CROSS_TOOL == 'iar':
 	PLATFORM 	= 'iar'
 	IAR_PATH 	= 'C:/Program Files/IAR Systems/Embedded Workbench 6.0 Evaluation'
@@ -79,7 +79,6 @@ elif PLATFORM == 'armcc':
     AFLAGS = DEVICE
     LFLAGS = DEVICE + ' --info sizes --info totals --info unused --info veneers --list rtthread-stm32.map --scatter stm32_rom.sct'
 
-    CFLAGS += ' --c99'
     CFLAGS += ' -I' + EXEC_PATH + '/ARM/RV31/INC'
     LFLAGS += ' --libpath ' + EXEC_PATH + '/ARM/RV31/LIB'
 
@@ -91,7 +90,7 @@ elif PLATFORM == 'armcc':
     else:
         CFLAGS += ' -O2'
 
-    POST_ACTION = 'fromelf --bin $TARGET --output rtthread.bin \nfromelf -z $TARGET'
+    POST_ACTION = 'fromelf --bin $TARGET --output ./build/rtthread.bin \nfromelf -z $TARGET'
 
 elif PLATFORM == 'iar':
     # toolchains
