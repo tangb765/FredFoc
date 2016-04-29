@@ -1,0 +1,19 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+SConscript(['attitude_estimator_ekf/codegen/SConscript'])
+
+cwd     = os.path.join(str(Dir('#')), 'imulib')
+src	= Glob('*.c')
+
+#src  += Glob('attitude_estimator_ekf/codegen/*.c')
+
+CPPPATH = [cwd, str(Dir('#'))]
+CPPDEFINES = ['__FPU_PRESENT=1,ARM_MATH_CM4,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING']
+
+group = DefineGroup('imulib', src, depend = ['RT_USING_IMULIB'], CPPPATH = CPPPATH, CPPDEFINES = CPPDEFINES)
+
+
+
+Return('group')

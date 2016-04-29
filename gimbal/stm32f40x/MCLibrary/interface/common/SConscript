@@ -1,0 +1,16 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'MCLibrary/interface/common')
+src	= []
+
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('MCLibrary', src, depend = ['RT_USING_MCLIB'], CPPPATH = CPPPATH)
+
+
+
+Return('group')

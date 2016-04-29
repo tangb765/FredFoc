@@ -1,0 +1,15 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'imulib/attitude_estimator_ekf/codegen')
+src	= Glob('*.c')
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('imulib', src, depend = ['RT_USING_IMULIB'], CPPPATH = CPPPATH)
+
+
+
+Return('group')

@@ -1,0 +1,20 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'MC_Library_Compiled/RVMDK_MCLIB_OBJS_DUAL')
+
+# add the general drivers.
+src = Split("""
+MC_Library_ProtectedSources_dual_drive_CM4_MKD.lib
+""")
+
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('MC_Library_Compiled', src, depend = [''], CPPPATH = CPPPATH)
+
+
+
+Return('group')

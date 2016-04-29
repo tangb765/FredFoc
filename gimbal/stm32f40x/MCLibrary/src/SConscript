@@ -1,0 +1,56 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'MCLibrary/src')
+
+# add the general drivers.
+src = Split("""
+BusVoltageSensorClass.c
+EncAlignCtrlClass.c
+MC_Math.c
+MCIRQHandlerClass.c
+MotorPowerMeasurementClass.c
+NTC_TemperatureSensorClass.c
+PID_PIRegulatorClass.c
+PIRegulatorClass.c
+PQD_MotorPowerMeasurementClass.c
+PWMnCurrFdbkClass.c
+Rdivider_BusVoltageSensorClass.c
+RevupCtrlClass.c
+SpeednPosFdbkClass.c
+SpeednTorqCtrlClass.c
+StateMachineClass.c
+TemperatureSensorClass.c
+Virtual_BusVoltageSensorClass.c
+Virtual_TemperatureSensorClass.c
+VirtualSpeedSensor_SpeednPosFdbkClass.c
+R3_F4XX_PWMnCurrFdbkClass.c
+DigitalOutputClass_F4XX.c
+ENC_F4xx_SpeednPosFdbkClass.c
+HALL_F4xx_SpeednPosFdbkClass.c
+ICS_F4XX_PWMnCurrFdbkClass.c
+R1_F4XX_PWMnCurrFdbkClass.c
+CircleLimitationClass.c
+OpenLoopClass.c
+HiFreqInj_FPU_SpeednPosFdbkClass.c
+""")
+
+# add Ethernet drivers.
+#if GetDepend('STM32F4XX'):
+#    src += ['DigitalOutputClass_F4XX.c']
+#	src += ['ENC_F4xx_SpeednPosFdbkClass.c']
+
+
+# add gpio drivers.
+#if GetDepend('RT_USING_PIN'):
+#    src += ['gpio.c']
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('MCLibrary', src, depend = ['RT_USING_MCLIB'], CPPPATH = CPPPATH)
+
+
+
+Return('group')

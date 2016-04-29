@@ -1,0 +1,24 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+
+cwd     = os.path.join(str(Dir('#')), 'SystemDriveParams')
+
+src = Split("""
+stm32f4xx_MC_it.c
+""")
+
+# add Ethernet drivers.
+#if GetDepend('RT_USING_LWIP'):
+#    src += ['stm32f4xx_eth.c']
+
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('SystemDriveParams', src, depend = ['RT_USING_MCLIB'], CPPPATH = CPPPATH)
+
+
+
+Return('group')

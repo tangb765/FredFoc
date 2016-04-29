@@ -1,0 +1,19 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+SConscript(['RVMDK_MCLIB_OBJS_SINGLE/SConscript'])
+#SConscript(['RVMDK_MCLIB_OBJS_DUAL/SConscript'])
+cwd     = os.path.join(str(Dir('#')), 'MC_Library_Compiled')
+
+src = []
+
+
+CPPPATH = [cwd, str(Dir('#'))]
+
+
+group = DefineGroup('MC_Library_Compiled', src, depend = [''], CPPPATH = CPPPATH)
+
+
+
+Return('group')

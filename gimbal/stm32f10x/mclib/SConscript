@@ -1,0 +1,11 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+cwd     = os.path.join(str(Dir('#')), 'mclib')
+src	= Glob('*.c')
+CPPPATH = [cwd, str(Dir('#'))]
+
+group = DefineGroup('mclib', src, depend = ['RT_USING_MCLIBx'], CPPPATH = CPPPATH)
+
+Return('group')
