@@ -19,6 +19,16 @@
 #include "board.h"
 #include "usart.h"
 #include "gpio.h"
+#include "led.h"
+
+#include "stm32f20x_40x_spi.h"
+#include "hrt.h"
+#include "app_config.h"
+
+#ifdef  RT_USING_COMPONENTS_INIT
+#include <components.h>
+#endif  /* RT_USING_COMPONENTS_INIT */
+
 
 /**
  * @addtogroup STM32
@@ -53,11 +63,10 @@ void NVIC_Configuration(void)
  * Output         : None
  * Return         : None
  *******************************************************************************/
+rt_uint32_t  cnts;
+static RCC_ClocksTypeDef  rcc_clocks;
 void  SysTick_Configuration(void)
 {
-    RCC_ClocksTypeDef  rcc_clocks;
-    rt_uint32_t         cnts;
-
     RCC_GetClocksFreq(&rcc_clocks);
 
     cnts = (rt_uint32_t)rcc_clocks.HCLK_Frequency / RT_TICK_PER_SECOND;
@@ -76,11 +85,15 @@ void SysTick_Handler(void)
     /* enter interrupt */
     rt_interrupt_enter();
 
+		Hrt_Time += cnts;
+	
     rt_tick_increase();
-
+rt_hw_led_flush();
     /* leave interrupt */
     rt_interrupt_leave();
 }
+
+
 
 /**
  * This function will initial STM32 board.
@@ -89,15 +102,25 @@ void rt_hw_board_init()
 {
     /* NVIC Configuration */
     NVIC_Configuration();
-
+	
+	 Init_Config();
+rt_hw_led_init();
     /* Configure the SysTick */
     SysTick_Configuration();
 
     stm32_hw_usart_init();
-    stm32_hw_pin_init();
-    
+//    stm32_hw_pin_init();  
+	
+#ifdef FeiYu_Board_A	
+		stm32_hw_spi_init();
+#endif
+	
 #ifdef RT_USING_CONSOLE
     rt_console_set_device(CONSOLE_DEVICE);
+#endif
+		
+#ifdef RT_USING_COMPONENTS_INIT
+    rt_components_board_init();
 #endif
 }
 

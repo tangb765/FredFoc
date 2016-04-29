@@ -16,7 +16,6 @@
 #include <rthw.h>
 #include <rtthread.h>
 
-#include "stm32f4xx.h"
 #include "board.h"
 
 /**
@@ -64,13 +63,19 @@ void assert_failed(u8* file, u32 line)
  * This function will startup RT-Thread RTOS.
  */
 void rtthread_startup(void)
-{
+{	
+  /* FPU settings ,__FPU_PRESENT=1,ARM_MATH_CM4,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING,STM32F40XX,VER_0_2*/
+	/* If no this settings,it maybe enter HardFault_Handler() interrupt when mdk complier chose "Use Single Precision" to use FPU instruction. */
+		#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+			SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2)); 
+		#endif
+	
     /* init board */
     rt_hw_board_init();
 
-    /* show version */
-    rt_show_version();
-
+//    /* show version */
+//    rt_show_version();
+	
     /* init tick */
     rt_system_tick_init();
 
@@ -84,7 +89,7 @@ void rtthread_startup(void)
 
     /* init scheduler system */
     rt_system_scheduler_init();
-
+		
     /* init application */
     rt_application_init();
 

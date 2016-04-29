@@ -37,18 +37,67 @@
 
 // <o> Internal SRAM memory size[Kbytes] <8-64>
 //	<i>Default: 64
-#ifdef __ICCARM__
-// Use *.icf ram symbal, to avoid hardcode.
-extern char __ICFEDIT_region_RAM_end__;
-#define STM32_SRAM_END          &__ICFEDIT_region_RAM_end__
-#else
 #define STM32_SRAM_SIZE         128
 #define STM32_SRAM_END          (0x20000000 + STM32_SRAM_SIZE * 1024)
-#endif
 
 // <o> Console on USART: <0=> no console <1=>USART 1 <2=>USART 2 <3=> USART 3
 // 	<i>Default: 1
-#define STM32_CONSOLE_USART		2
+#define STM32_CONSOLE_USART		1
+
+#define CONSOLE_NULL  0x00
+#define CONSOLE_A  		0x01
+#define CONSOLE_B  		0x02
+#define CONSOLE_C  		0x03
+#define CONSOLE_ALL   0x10
+
+#define RT_USING_BOARD_A
+
+
+
+
+/*Haraware setting,only one active*/
+#ifdef RT_USING_BOARD_A
+#define FeiYu_Board_A
+#define CONSOLE_O  CONSOLE_A
+/* USART driver select. */
+#define RT_USING_UART1
+//#define RT_USING_UART2
+//#define RT_USING_UART3
+#endif
+
+#ifdef RT_USING_BOARD_B
+#define FeiYu_Board_B
+#define CONSOLE_O  CONSOLE_B
+/* USART driver select. */
+#define RT_USING_UART1
+//#define RT_USING_UART2
+#define RT_USING_UART3
+#endif
+
+#ifdef RT_USING_BOARD_C
+#define FeiYu_Board_C
+#define CONSOLE_O  CONSOLE_C
+/* USART driver select. */
+#define RT_USING_UART1
+//#define RT_USING_UART2
+#define RT_USING_UART3
+#endif
+
+
+#ifdef FeiYu_Board_A
+#define Encoder_Align_Pos  6575//5232
+#define Level_Mec_Angle    -4702
+#endif
+
+#ifdef FeiYu_Board_B
+#define Encoder_Align_Pos  8109
+#define Level_Mec_Angle    286
+#endif
+
+#ifdef FeiYu_Board_C
+#define Encoder_Align_Pos   15538
+#define Level_Mec_Angle     1034
+#endif
 
 void rt_hw_board_init(void);
 
@@ -64,6 +113,4 @@ void rt_hw_board_init(void);
 
 #define FINSH_DEVICE_NAME   CONSOLE_DEVICE
 
-#endif
-
-// <<< Use Configuration Wizard in Context Menu >>>
+#endif /* __BOARD_H__ */
