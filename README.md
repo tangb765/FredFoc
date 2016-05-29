@@ -76,7 +76,7 @@ MODE_NUMS,
 #motor,test,close@
 
 
-//´®¿Ú´òÓ¡µ÷ÊÔÊı¾İ
+//ä¸²å£æ‰“å°è°ƒè¯•æ•°æ®
 
 #test,close@
 #test,tle5012@
@@ -105,7 +105,7 @@ MODE_NUMS,
 
 
 
-//pid²ÎÊıµ÷ÊÔ
+//pidå‚æ•°è°ƒè¯•
 #pid,tk,2470,4096@
 #pid,ti,3238,8192@
 #pid,td,100,8192@
@@ -123,7 +123,7 @@ MODE_NUMS,
 #pid,pd,0,512@
 
 
-//²âÊÔ
+//æµ‹è¯•
 #console,null@
 #console,a@
 #test,motor@
@@ -131,7 +131,7 @@ MODE_NUMS,
 #motor,calilevel@
 #save,system,configs@
 
-//FLUX²âÊÔ
+//FLUXæµ‹è¯•
 #imu,close@
 #console,a@
 #test,motor@
@@ -146,7 +146,7 @@ MODE_NUMS,
 #pid,fi,1100,8192@
 #pid,fk,700,4096@
 
-//Á¦¾Ø²âÊÔ
+//åŠ›çŸ©æµ‹è¯•
 #imu,close@
 #console,a@
 #test,motor@
@@ -162,7 +162,7 @@ MODE_NUMS,
 #pid,tk,700,4096@
 
 
-//ËÙ¶È²âÊÔ
+//é€Ÿåº¦æµ‹è¯•
 #imu,open@
 #console,a@
 #test,motor@                                                                                                
@@ -177,11 +177,10 @@ MODE_NUMS,
 #motor,stop@ 
 
 
-
 #pid,sk,4800,64@
 #pid,si,1000,1024@
 
-//Î»ÖÃ²âÊÔ
+//ä½ç½®æµ‹è¯•
 #imu,close@
 #console,a@
 #test,motor@ 
@@ -196,5 +195,5 @@ MODE_NUMS,
 #pid,pi,0,16384@
 #pid,pd,0,512@
 
-//¹Ø    
+//å…³    
 #motor,stop@           
