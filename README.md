@@ -27,26 +27,16 @@ INVERSION_YAW_AND_ROLL_FOLLOW_MODE,
 MODE_NUMS,		
 
 
-
 #E,8916,8917,8918,8919,8920,8921$
-
 #E,8916,8917,8918,8919,8920,8921@
-
 #E,0,8917,0,0,0,0@
-
 #E,1000,0,0,0,0,0@
-
 #E,4000,0,0,0,0,0@
-
 #E,4000,0,0,100,0,0@
-
 #E,15000,0,0,10,0,0@
-
-
 #E,200,0,0,2500,0,0@
 
 #save,system,configs@
-
 #console,a@
 #console,b@
 #console,c@
@@ -63,8 +53,6 @@ MODE_NUMS,
 #imu,get,gyro,bias@
 #imu,get,acc,bias@
 #imu,get,acc,martixA@
-
-
 
 #motor,run@
 #motor,align@
